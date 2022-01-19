@@ -113,7 +113,7 @@ export const Home = () => {
     });
     const [value, setValue] = useState<string>('');
     const [result, setResult] = useState<Array<string>>([]);
-    const [dataResult, setDataResult] = useState({
+    const [dataResult, setDataResult] = useState<ResultDataState>({
         skip: 0,
         wrong: 0,
         right: 0
@@ -156,8 +156,8 @@ export const Home = () => {
 
     function nextClick() {
         setQuesShow(quesShow < 5 ? quesShow + 1 : quesShow)
-        setResultHide(quesShow < 6 ? false : true)
-        setQueshide(quesShow < 6 ? true : false)
+        setResultHide(quesShow === 5 ? true : false)
+        setQueshide(quesShow === 5 ? false : true)
         setResult([...result, value])
         setUpdate(true);
     }
