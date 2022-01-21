@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { CheckBox } from './CheckBox';
 import { FillInTheBlanks } from './FillInTheBlanks';
 import { RadioButton } from './RadioButton';
-import { question, resultValue } from '../Data'
+import { questionEnglish, questionHindi } from '../Data'
 import { Pie, PieChart } from 'recharts';
 
 const useStyle = makeStyles((theme) => ({
@@ -72,7 +72,7 @@ const useStyle = makeStyles((theme) => ({
         color: "green",
     },
     buttonDiv: {
-        width: "300px",
+        width: "500px",
         marginTop: theme.spacing(2),
         display: "flex",
         flexDirection: "row",
@@ -97,10 +97,14 @@ type ResultDataState = {
     right: number
 }
 
+type ValueState = {
+    id: number
+    value: string
+}
+
 export const Home = () => {
     const classes = useStyle();
     const [candidateData, setCandidateData] = useState<CandidateDataState>({ name: "", gender: "", language: "" });
-    const [update, setUpdate] = useState<boolean>(false);
     const [homeHide, setHomeHide] = useState<boolean>(true);
     const [queshide, setQueshide] = useState<boolean>(false);
     const [resultHide, setResultHide] = useState<boolean>(false);
@@ -111,17 +115,19 @@ export const Home = () => {
         checkedC: false,
         checkedD: false,
     });
-    const [value, setValue] = useState<string>('');
-    const [result, setResult] = useState<Array<string>>([]);
+    const [value, setValue] = useState<ValueState>({ id: 0, value: "" });
+    const [result, setResult] = useState<Array<ValueState>>([]);
     const [dataResult, setDataResult] = useState<ResultDataState>({
         skip: 0,
         wrong: 0,
         right: 0
     })
+    const [question, setQuestion] = useState<any>(questionEnglish);
 
     const submitCandidateData = () => {
         setHomeHide(false);
         setQueshide(true);
+        setQuestion(candidateData.language === "Hindi" ? questionHindi : questionEnglish);
     }
 
     const data = [
@@ -131,54 +137,54 @@ export const Home = () => {
     ]
 
     function handleChange(e: any) {
-        if (quesShow === 1) {
-            setValue(e.target.value)
-        } else if (quesShow === 2) {
-            setValue(e.target.value)
-        } else if (quesShow === 3) {
-            setState({ ...state, [e.target.name]: e.target.checked });
-            setValue(value.concat(e.target.value))
-        } else if (quesShow === 4) {
-            setValue(e.target.value)
-        } else if (quesShow === 5) {
-            setValue(e.target.value)
+        setValue({ id: quesShow, value: e.target.value });
+    }
+
+    function handleCheckBox(e: any) {
+        setState({ ...state, [e.target.name]: e.target.checked });
+        if (e.target.checked) {
+            setValue({ id: quesShow, value: value.value.concat(e.target.value) });
+        } else {
+            setValue({ id: quesShow, value: value.value.replace(e.target.value, "") });
+        }
+    }
+
+    function prevClick() {
+        if (quesShow !== 1) {
+            setQuesShow(quesShow - 1)
         }
     }
 
     function submitQues() {
-        setResult([...result, value])
-        setQuesShow(quesShow < 5 ? quesShow + 1 : quesShow)
-        setResultHide(quesShow === 5 ? true : false)
-        setQueshide(quesShow === 5 ? false : true)
-        setValue("")
-        setUpdate(true);
+        if (value.value) {
+            setResult([...result, value])
+            setQuesShow(quesShow < question.length ? quesShow + 1 : quesShow);
+            setValue({ id: 0, value: "" })
+        }
     }
 
     function nextClick() {
-        setQuesShow(quesShow < 5 ? quesShow + 1 : quesShow)
-        setResultHide(quesShow === 5 ? true : false)
-        setQueshide(quesShow === 5 ? false : true)
-        setResult([...result, value])
-        setUpdate(true);
+        if (quesShow !== question.length) {
+            setQuesShow(quesShow + 1);
+        }
     }
 
-    useEffect(() => {
-        if (update) {
-            localStorage.setItem('result', JSON.stringify(result));
-            result.map((item, i) => {
-                if (item === resultValue[i]) {
-                    setDataResult({ ...dataResult, right: dataResult.right + 1 })
-                } else if (item === "") {
-                    setDataResult({ ...dataResult, skip: dataResult.skip + 1 })
-                } else if (item !== resultValue[i]) {
-                    setDataResult({ ...dataResult, wrong: dataResult.wrong + 1 })
+    function getResult() {
+        if (question.length === result.length) {
+            let wrong = 0;
+            let right = 0;
+            result.map((item) => {
+                if (item.value === question[item.id - 1].answer) {
+                    return right++
+                } else {
+                    return wrong++
                 }
             })
+            setDataResult({ ...dataResult, right: right, wrong: wrong })
+            setQueshide(false)
+            setResultHide(true);
         }
-        return () => {
-            setUpdate(false);
-        }
-    }, [result])
+    }
 
     return (
         <Container className={classes.container}>
@@ -240,19 +246,21 @@ export const Home = () => {
                             </Container>
                         </Container>
                         {
-                            question.map((item, i) => {
+                            question.map((item:any, i:number) => {
                                 if (item.type === 'FillInTheBlanks') {
-                                    return quesShow === i + 1 ? <FillInTheBlanks key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value} /> : ""
+                                    return quesShow === i + 1 ? <FillInTheBlanks key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value.value} /> : ""
                                 } else if (item.type === 'RadioButton') {
-                                    return quesShow === i + 1 ? <RadioButton key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value} /> : ""
+                                    return quesShow === i + 1 ? <RadioButton key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value.value} /> : ""
                                 } else if (item.type === 'CheckBox') {
-                                    return quesShow === i + 1 ? <CheckBox key={i} data={item.data} handleChange={handleChange} ques={i + 1} state={state} /> : ""
+                                    return quesShow === i + 1 ? <CheckBox key={i} data={item.data} handleChange={handleCheckBox} ques={i + 1} state={state} /> : ""
                                 }
                             })
                         }
                         <Container className={classes.buttonDiv}>
+                            <Button variant='contained' color="primary" onClick={() => prevClick()}>Previous</Button>
                             <Button variant='contained' color="secondary" onClick={() => submitQues()}>Submit</Button>
                             <Button variant='contained' color="primary" onClick={() => nextClick()}>Next</Button>
+                            <Button variant='contained' color="secondary" onClick={() => getResult()}>Submit Quiz</Button>
                         </Container>
                     </Container>
                     : ""
