@@ -36,7 +36,8 @@ type CheckBoxProps = {
         checkedB: boolean,
         checkedC: boolean,
         checkedD: boolean,
-    }
+    },
+
 }
 
 export const CheckBox = ({ data, ques, handleChange, state }: CheckBoxProps) => {
@@ -55,7 +56,6 @@ export const CheckBox = ({ data, ques, handleChange, state }: CheckBoxProps) => 
                                 checked={state.checkedB}
                                 onChange={handleChange}
                                 name="checkedB"
-                                color="primary"
                                 value={data.opt1}
                             />
                         }
@@ -67,7 +67,6 @@ export const CheckBox = ({ data, ques, handleChange, state }: CheckBoxProps) => 
                                 checked={state.checkedA}
                                 onChange={handleChange}
                                 name="checkedA"
-                                color="primary"
                                 value={data.opt2}
                             />
                         }
@@ -79,7 +78,6 @@ export const CheckBox = ({ data, ques, handleChange, state }: CheckBoxProps) => 
                                 checked={state.checkedC}
                                 onChange={handleChange}
                                 name="checkedC"
-                                color="primary"
                                 value={data.opt3}
                             />
                         }
@@ -91,7 +89,6 @@ export const CheckBox = ({ data, ques, handleChange, state }: CheckBoxProps) => 
                                 checked={state.checkedD}
                                 onChange={handleChange}
                                 name="checkedD"
-                                color="primary"
                                 value={data.opt4}
                             />
                         }

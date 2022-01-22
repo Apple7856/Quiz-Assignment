@@ -42,8 +42,8 @@ export const RadioButton = ({data, ques, handleChange, value }: RadioButtonProps
                 <Typography>{data.ques}</Typography>
                 <Container className={classes.optionDiv}>
                     <RadioGroup name="ques" value={value} onChange={handleChange}>
-                        <FormControlLabel value={data.opt1} control={<Radio color="primary" />} label={data.opt1} />
-                        <FormControlLabel value={data.opt2} control={<Radio color="primary" />} label={data.opt2} />
+                        <FormControlLabel value={data.opt1} control={<Radio />} label={data.opt1} />
+                        <FormControlLabel value={data.opt2} control={<Radio />} label={data.opt2} />
                     </RadioGroup>
                 </Container>
             </Container>

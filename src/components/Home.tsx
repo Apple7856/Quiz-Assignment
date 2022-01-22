@@ -1,5 +1,5 @@
 import { Button, Container, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CheckBox } from './CheckBox';
 import { FillInTheBlanks } from './FillInTheBlanks';
 import { RadioButton } from './RadioButton';
@@ -115,8 +115,7 @@ export const Home = () => {
         checkedC: false,
         checkedD: false,
     });
-    const [value, setValue] = useState<ValueState>({ id: 0, value: "" });
-    const [result, setResult] = useState<Array<ValueState>>([]);
+    const [valueData, setValueData] = useState<Array<any>>([]);
     const [dataResult, setDataResult] = useState<ResultDataState>({
         skip: 0,
         wrong: 0,
@@ -127,6 +126,14 @@ export const Home = () => {
     const submitCandidateData = () => {
         setHomeHide(false);
         setQueshide(true);
+        const dataValue = { id: 0, value: "" };
+        const dataArray: ValueState[] = [];
+        let i: number = 0;
+        while (i < questionHindi.length) {
+            dataArray.push(dataValue);
+            i++
+        }
+        setValueData(dataArray)
         setQuestion(candidateData.language === "Hindi" ? questionHindi : questionEnglish);
     }
 
@@ -137,53 +144,63 @@ export const Home = () => {
     ]
 
     function handleChange(e: any) {
-        setValue({ id: quesShow, value: e.target.value });
+        setValueData(valueData.map((elem, i) => {
+            if (quesShow - 1 === i) {
+                return { id: quesShow, value: e.target.value }
+            } else {
+                return elem
+            }
+        }))
     }
 
     function handleCheckBox(e: any) {
         setState({ ...state, [e.target.name]: e.target.checked });
         if (e.target.checked) {
-            setValue({ id: quesShow, value: value.value.concat(e.target.value) });
+            setValueData(valueData.map((elem, i) => {
+                if (quesShow - 1 === i) {
+                    return { id: quesShow, value: valueData[i].value.concat(e.target.value) }
+                } else {
+                    return elem
+                }
+            }))
         } else {
-            setValue({ id: quesShow, value: value.value.replace(e.target.value, "") });
+            setValueData(valueData.map((elem, i) => {
+                if (quesShow - 1 === i) {
+                    return { id: quesShow, value: valueData[i].value.replace(e.target.value) }
+                } else {
+                    return elem
+                }
+            }))
         }
     }
 
     function prevClick() {
-        if (quesShow !== 1) {
-            setQuesShow(quesShow - 1)
-        }
+        setQuesShow(quesShow - 1)
     }
 
     function submitQues() {
-        if (value.value) {
-            setResult([...result, value])
+        if (valueData[quesShow - 1].value) {
             setQuesShow(quesShow < question.length ? quesShow + 1 : quesShow);
-            setValue({ id: 0, value: "" })
         }
     }
 
     function nextClick() {
-        if (quesShow !== question.length) {
-            setQuesShow(quesShow + 1);
-        }
+        setQuesShow(quesShow + 1);
     }
 
     function getResult() {
-        if (question.length === result.length) {
-            let wrong = 0;
-            let right = 0;
-            result.map((item) => {
-                if (item.value === question[item.id - 1].answer) {
-                    return right++
-                } else {
-                    return wrong++
-                }
-            })
-            setDataResult({ ...dataResult, right: right, wrong: wrong })
-            setQueshide(false)
-            setResultHide(true);
-        }
+        let wrong = 0;
+        let right = 0;
+        valueData.map((item) => {
+            if (item.value === question[item.id - 1].answer) {
+                return right++
+            } else {
+                return wrong++
+            }
+        })
+        setDataResult({ ...dataResult, right: right, wrong: wrong })
+        setQueshide(false)
+        setResultHide(true);
     }
 
     return (
@@ -246,21 +263,21 @@ export const Home = () => {
                             </Container>
                         </Container>
                         {
-                            question.map((item:any, i:number) => {
+                            question.map((item: any, i: number) => {
                                 if (item.type === 'FillInTheBlanks') {
-                                    return quesShow === i + 1 ? <FillInTheBlanks key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value.value} /> : ""
+                                    return quesShow === i + 1 ? <FillInTheBlanks key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={valueData[quesShow - 1].value} /> : ""
                                 } else if (item.type === 'RadioButton') {
-                                    return quesShow === i + 1 ? <RadioButton key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={value.value} /> : ""
+                                    return quesShow === i + 1 ? <RadioButton key={i} data={item.data} handleChange={handleChange} ques={i + 1} value={valueData[quesShow - 1].value} /> : ""
                                 } else if (item.type === 'CheckBox') {
                                     return quesShow === i + 1 ? <CheckBox key={i} data={item.data} handleChange={handleCheckBox} ques={i + 1} state={state} /> : ""
                                 }
                             })
                         }
                         <Container className={classes.buttonDiv}>
-                            <Button variant='contained' color="primary" onClick={() => prevClick()}>Previous</Button>
+                            <Button variant='contained' color="primary" disabled={quesShow === 1 ? true : false} onClick={() => prevClick()}>Previous</Button>
                             <Button variant='contained' color="secondary" onClick={() => submitQues()}>Submit</Button>
-                            <Button variant='contained' color="primary" onClick={() => nextClick()}>Next</Button>
-                            <Button variant='contained' color="secondary" onClick={() => getResult()}>Submit Quiz</Button>
+                            <Button variant='contained' color="primary" disabled={quesShow === 5 ? true : false} onClick={() => nextClick()}>Next</Button>
+                            <Button variant='contained' color="secondary" disabled={quesShow === 5 ? false : true} onClick={() => getResult()}>Submit Quiz</Button>
                         </Container>
                     </Container>
                     : ""
