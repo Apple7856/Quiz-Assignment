@@ -204,18 +204,19 @@ export const Home = () => {
     }
 
     return (
-        <Container className={classes.container}>
+        <Container className={classes.container} data-testid="mainComponent">
             {
                 homeHide ?
                     <Container className={classes.mainBox}>
-                        <Container className={classes.form}>
-                            <Typography variant='body2' className={classes.headingText}>Candidate Form</Typography>
-                            <form className={classes.root} noValidate autoComplete="off">
-                                <TextField id="standard-basic" label="Name" className={classes.select} value={candidateData.name} onChange={(e) => setCandidateData({ ...candidateData, name: e.target.value })} />
+                        <Container className={classes.form} data-testid="candidateForm">
+                            <Typography variant='body2' data-testid="heading" className={classes.headingText}>Candidate Form</Typography>
+                            <form className={classes.root} noValidate autoComplete="off" data-testid="formLength">
+                                <TextField id="standard-basic" data-testid="inputField" label="Name" className={classes.select} value={candidateData.name} onChange={(e) => setCandidateData({ ...candidateData, name: e.target.value })} />
                                 <TextField
                                     id="standard-select-currency"
                                     select
                                     label="Gender"
+                                    data-testid="selectInputField"
                                     className={classes.select}
                                     value={candidateData.gender}
                                     onChange={(e) => setCandidateData({ ...candidateData, gender: e.target.value })}
@@ -231,6 +232,7 @@ export const Home = () => {
                                     id="standard-select-currency"
                                     select
                                     label="Language"
+                                    data-testid="selectInputField"
                                     className={classes.select}
                                     value={candidateData.language}
                                     onChange={(e) => setCandidateData({ ...candidateData, language: e.target.value })}
@@ -242,7 +244,7 @@ export const Home = () => {
                                         Hindi
                                     </MenuItem>
                                 </TextField>
-                                <Button variant='contained' color="secondary" className={classes.submitBtn} onClick={() => submitCandidateData()}>Submit</Button>
+                                <Button variant='contained' data-testid="buttonTest" color="secondary" className={classes.submitBtn} onClick={() => submitCandidateData()}>Submit</Button>
                             </form>
                         </Container>
                     </Container>

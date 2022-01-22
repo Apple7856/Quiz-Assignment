@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Component Matches SnapShot 1`] = `
+<div
+  className="MuiContainer-root makeStyles-container-61 MuiContainer-maxWidthLg"
+  data-testid="mainComponent"
+>
+  <div
+    className="MuiContainer-root makeStyles-mainBox-62 MuiContainer-maxWidthLg"
+  >
+    <div
+      className="MuiContainer-root makeStyles-form-63 MuiContainer-maxWidthLg"
+      data-testid="candidateForm"
+    >
+      <p
+        className="MuiTypography-root makeStyles-headingText-65 MuiTypography-body2"
+        data-testid="heading"
+      >
+        Candidate Form
+      </p>
+      <form
+        autoComplete="off"
+        className="makeStyles-root-64"
+        data-testid="formLength"
+        noValidate={true}
+      >
+        <div
+          className="MuiFormControl-root MuiTextField-root makeStyles-select-66"
+          data-testid="inputField"
+        >
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+            htmlFor="standard-basic"
+            id="standard-basic-label"
+          >
+            Name
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoFocus={false}
+              className="MuiInputBase-input MuiInput-input"
+              disabled={false}
+              id="standard-basic"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              required={false}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root MuiTextField-root makeStyles-select-66"
+          data-testid="selectInputField"
+        >
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+            htmlFor="standard-select-currency"
+            id="standard-select-currency-label"
+          >
+            Gender
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <div
+              aria-haspopup="listbox"
+              aria-labelledby="standard-select-currency-label standard-select-currency"
+              className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+              id="standard-select-currency"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onMouseDown={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <span
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "&#8203;",
+                  }
+                }
+              />
+            </div>
+            <input
+              aria-hidden={true}
+              autoFocus={false}
+              className="MuiSelect-nativeInput"
+              onAnimationStart={[Function]}
+              onChange={[Function]}
+              required={false}
+              tabIndex={-1}
+              value=""
+            />
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSelect-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root MuiTextField-root makeStyles-select-66"
+          data-testid="selectInputField"
+        >
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+            data-shrink={false}
+            htmlFor="standard-select-currency"
+            id="standard-select-currency-label"
+          >
+            Language
+          </label>
+          <div
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
+            onClick={[Function]}
+          >
+            <div
+              aria-haspopup="listbox"
+              aria-labelledby="standard-select-currency-label standard-select-currency"
+              className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+              id="standard-select-currency"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onMouseDown={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <span
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "&#8203;",
+                  }
+                }
+              />
+            </div>
+            <input
+              aria-hidden={true}
+              autoFocus={false}
+              className="MuiSelect-nativeInput"
+              onAnimationStart={[Function]}
+              onChange={[Function]}
+              required={false}
+              tabIndex={-1}
+              value=""
+            />
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSelect-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+          </div>
+        </div>
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submitBtn-67 MuiButton-containedSecondary"
+          data-testid="buttonTest"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            Submit
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  
+</div>
+`;
